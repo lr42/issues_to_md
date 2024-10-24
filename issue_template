@@ -1,0 +1,20 @@
+ [Issue {{.number}}: {{.title}}]({{.url}})
+========================================================================
+
+| <!-- --> | <!-- --> |
+|----------|----------|
+| State    | {{.state}} |
+| Author   | {{.author.name}} ([{{.author.login}}](https://github.com/{{.author.login}})) |
+| Created  | {{.createdAt}} |
+| Updated  | {{.updatedAt}} |
+
+{{.body}}
+
+
+{{range .comments}} [{{.author.login}}](https://github.com/{{.author.login}}) at [{{.createdAt}}]({{.url}})
+------------------------------------------------------------------------
+
+{{.body}}
+
+
+{{end}}
