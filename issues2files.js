@@ -78,5 +78,6 @@ for (let i of data) {
 }
 
 const now = new Date();
-fs.writeFileSync('00-issues/.last_update', now.getTime().toString());
+const now_unix = Math.round(now.getTime() / 1000);
+fs.writeFileSync('00-issues/.last_update', now_unix.toString());
 
