@@ -42,6 +42,9 @@ for (let i of data) {
 		//console.log('\n *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *\n');
 		//console.log(output);
 
+		fs.mkdirSync(DIR_OPEN, { recursive: true });
+		fs.mkdirSync(DIR_CLOSED, { recursive: true });
+
 		// **Remove old files**
 		// TODO Make the regex match a filename template.
 		const r = RegExp(`^0{0,2}${i.number} - .*\.md$`)
@@ -52,7 +55,7 @@ for (let i of data) {
 		old_files = old_files.concat(fs.readdirSync(DIR_CLOSED)
 			.filter(f => f.match(r))
 			.map(f => `${DIR_CLOSED}/${f}`));
-		console.log(old_files);
+		//console.log(old_files);
 		if (old_files.length > 1) {
 			throw('More than one file found');
 		} else if (! old_files.length == 0) {
@@ -72,7 +75,6 @@ for (let i of data) {
 			directory = DIR_OPEN;
 		}
 
-		fs.mkdirSync(directory, { recursive: true })
 		fs.writeFileSync(`${directory}/${filename}.md`, output);
 	}
 }
