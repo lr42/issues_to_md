@@ -9,7 +9,7 @@ const mustache = require('mustache')
 // TODO Test for `git` and `gh`...
 //   Tell the user how to install them if they are not installed.
 
-execSync('gh issue list --json assignees,closed,closedAt,id,isPinned,labels,milestone,projectCards,reactionGroups,stateReason,number,title,url,state,author,createdAt,updatedAt,body,comments > ./00-issues/.issues.json')
+execSync('gh issue list --state all --json assignees,closed,closedAt,id,isPinned,labels,milestone,projectCards,reactionGroups,stateReason,number,title,url,state,author,createdAt,updatedAt,body,comments > ./00-issues/.issues.json')
 // `projectItems` is not accessible without setting up tokens specially.
 
 const data = JSON.parse(fs.readFileSync('./00-issues/.issues.json'));
