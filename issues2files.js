@@ -6,6 +6,10 @@ const fs = require('node:fs');
 const mustache = require('mustache')
 
 
+const DIR_OPEN = '00-issues';
+const DIR_CLOSED = '00-issues/closed';
+
+
 // TODO Test for `git` and `gh`...
 //   Tell the user how to install them if they are not installed.
 
@@ -38,12 +42,38 @@ for (let i of data) {
 		//console.log('\n *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *\n');
 		//console.log(output);
 
+		// **Remove old files**
+		// TODO Make the regex match a filename template.
+		const r = RegExp(`^0{0,2}${i.number} - .*\.md$`)
+		let old_files = [];
+		old_files = old_files.concat(fs.readdirSync(DIR_OPEN)
+			.filter(f => f.match(r))
+			.map(f => `${DIR_OPEN}/${f}`));
+		old_files = old_files.concat(fs.readdirSync(DIR_CLOSED)
+			.filter(f => f.match(r))
+			.map(f => `${DIR_CLOSED}/${f}`));
+		console.log(old_files);
+		if (old_files.length > 1) {
+			throw('More than one file found');
+		} else if (! old_files.length == 0) {
+			fs.unlinkSync(old_files[0]);
+		}
+
 		const padded_number = i.number.toString().padStart(2, '0');
 		// TODO Make `filename_safe_title` actually safe to use in filenames.
 		const filename_safe_title = i.title;
 		// TODO Get the filename format from a mustache template.
 		const filename = `${padded_number} - ${filename_safe_title}`
-		fs.writeFileSync(`00-issues/${filename}.md`, output);
+
+		let directory;
+		if (i.state == "CLOSED") {
+			directory = DIR_CLOSED;
+		} else {
+			directory = DIR_OPEN;
+		}
+
+		fs.mkdirSync(directory, { recursive: true })
+		fs.writeFileSync(`${directory}/${filename}.md`, output);
 	}
 }
 
