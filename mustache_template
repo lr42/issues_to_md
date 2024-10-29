@@ -1,0 +1,21 @@
+[Issue {{{ number }}}: {{{ title }}}]({{{ url }}})
+========================================================================
+
+| <!-- --> | <!-- --> |
+|----------|----------|
+| State    | {{{ state }}} |
+| Author   | [{{{ author.login }}}](https://github.com/{{{ author.login }}}) |
+| Created  | {{{ createdAt }}} |
+| Updated  | {{{ updatedAt }}} |
+
+{{{ body }}}
+
+
+{{ #comments }}[{{{ author.login }}}](https://github.com/{{{ author.login }}}) at [{{{ createdAt }}}]({{{ url }}})
+------------------------------------------------------------------------
+
+{{{ body }}}
+
+
+{{ /comments }}
+<!-- vim: set wrap tw=0: -->
